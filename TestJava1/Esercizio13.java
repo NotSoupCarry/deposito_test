@@ -41,10 +41,10 @@ public class Esercizio13 {
         do {
             while (!scanner.hasNextInt()) {
                 System.out.print("Devi inserire un numero intero. Riprova: ");
-                scanner.next(); 
+                scanner.next();
             }
             valore = scanner.nextInt();
-            scanner.nextLine(); 
+            scanner.nextLine();
             if (valore < 0) {
                 System.out.print("Il numero non può essere negativo. Riprova: ");
             }
@@ -78,13 +78,50 @@ public class Esercizio13 {
         return input; // Restituisce l'input corretto
     }
 
+    // Metodo per controllare l'input della password
+    private static String controllaPassword(Scanner scanner) {
+        String password;
+        boolean passwordValida = false;
+
+        do {
+            System.out.print("(almeno 3 caratteri e un maiuscolo): ");
+            password = scanner.nextLine();
+
+            // Controlla la lunghezza della password
+            if (password.length() < 3) {
+                System.out.println("La password deve essere lunga almeno 3 caratteri.");
+                continue; // Torna all'inizio del ciclo
+            }
+
+            // Controlla se c'è almeno un carattere maiuscolo
+            boolean contieneMaiuscola = false;
+            for (char c : password.toCharArray()) {
+                if (Character.isUpperCase(c)) {
+                    contieneMaiuscola = true;
+                    break;
+                }
+            }
+
+            if (!contieneMaiuscola) {
+                System.out.println("La password deve contenere almeno un carattere maiuscolo.");
+                continue; // Torna all'inizio del ciclo
+            }
+
+            // Se tutti i controlli sono superati, la password è valida
+            passwordValida = true;
+
+        } while (!passwordValida); // Ripete finché la password non è valida
+
+        return password; // Restituisce la password valida
+    }
+
     // Metodo per registrare un nuovo utente
     private static void registrazione(Scanner scanner) {
         System.out.print("Inserisci nome: ");
         String nome = controlloInputStringhe(scanner); // Controlla il nome dell'utente
 
-        System.out.print("Inserisci password: ");
-        String pass = controlloInputStringhe(scanner); // Controlla la password dell'utente
+        System.out.print("Inserisci password");
+        String pass = controllaPassword(scanner); // Controlla la password dell'utente
 
         System.out.print("Scegli la tua domanda segreta: ");
         String domanda = controlloInputStringhe(scanner); // Controlla la domanda segreta
@@ -106,8 +143,8 @@ public class Esercizio13 {
         System.out.print("Nome: ");
         String nome = controlloInputStringhe(scanner); // Controlla il nome inserito
 
-        System.out.print("Password: ");
-        String pass = controlloInputStringhe(scanner); // Controlla la password inserita
+        System.out.print("Password");
+        String pass = controllaPassword(scanner); // Controlla la password inserita
 
         int indice = -1;
         // Verifica se le credenziali sono corrette
@@ -172,8 +209,8 @@ public class Esercizio13 {
             return;
         }
 
-        System.out.print("Nuova password: ");
-        password.set(indice, controlloInputStringhe(scanner)); // Modifica la password
+        System.out.print("Nuova password");
+        password.set(indice, controllaPassword(scanner)); // Modifica la password
 
         // Chiede se l'utente vuole cambiare anche la domanda segreta
         System.out.print("Vuoi cambiare anche la domanda segreta? (si/no): ");
