@@ -104,7 +104,7 @@ class Squadra {
 
     // Metodo per inserire manualmente i calciatori
     public void inserisciGiocatori(Scanner scanner) {
-        final int NUMERO_GIOCATORI = 1;
+        final int NUMERO_GIOCATORI = 12;
 
         System.out.println("\nInserisci i" + NUMERO_GIOCATORI + "giocatori per la squadra " + nomeSquadra);
         for (int i = 1; i <= NUMERO_GIOCATORI; i++) {
