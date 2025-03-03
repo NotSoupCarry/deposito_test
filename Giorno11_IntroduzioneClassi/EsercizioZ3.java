@@ -8,13 +8,13 @@ public class EsercizioZ3 {
 
         // Creiamo due squadre con input manuale
         System.out.print("Inserisci il nome della prima squadra: ");
-        String nomeSquadra1 = Controlli.controlloInputStringhe(scanner); 
+        String nomeSquadra1 = Controlli.controlloInputStringhe(scanner);
         Squadra squadra1 = new Squadra(nomeSquadra1);
 
         squadra1.inserisciGiocatori(scanner);
 
         System.out.print("\nInserisci il nome della seconda squadra: ");
-        String nomeSquadra2 = Controlli.controlloInputStringhe(scanner); 
+        String nomeSquadra2 = Controlli.controlloInputStringhe(scanner);
         Squadra squadra2 = new Squadra(nomeSquadra2);
 
         squadra2.inserisciGiocatori(scanner);
@@ -31,10 +31,9 @@ public class EsercizioZ3 {
         scanner.close();
     }
 
-   
 }
 
-//#region Classi
+// #region Classi
 // Classe Calciatore
 class Calciatore {
     String nome;
@@ -71,7 +70,7 @@ class Squadra {
             System.out.print("Nome del giocatore " + i + ": ");
             String nome = Controlli.controlloInputStringhe(scanner);
 
-            System.out.print("Ruolo del giocatore " + i + " (Portiere, Difensore, Centrocampista, Attaccante): ");
+            System.out.print("Ruolo del giocatore " + i + "(" + Controlli.getRuoliValidiStringa() + "): ");
             String ruolo = Controlli.controlloRuolo(scanner);
 
             calciatori.add(new Calciatore(nome, ruolo));
@@ -85,7 +84,7 @@ class Squadra {
             c.stampaDettagli();
         }
     }
-    
+
 }
 
 // Classe Partita
@@ -120,15 +119,29 @@ class Partita {
     }
 
 }
-//#endregion
+// #endregion
 
-// #region METODI DI CONTROLLO INPUT
-class Controlli{
-    public static final int NUMERO_GIOCATORI = 12;
-    public static final String[] RUOLI_VALIDI = {"Portiere", "Difensore", "Centrocampista", "Attaccante"};
+// #region CLASSE CONTROLLI CON METODI DI CONTROLLO INPUT
+class Controlli {
+    public static final int NUMERO_GIOCATORI = 1;
+    public static final String[] RUOLI_VALIDI = { "Portiere", "Difensore", "Centrocampista", "Attaccante" };
+
+    // Metodo per creare la stringa dinamica dei ruoli
+    public static String getRuoliValidiStringa() {
+        StringBuilder ruoliValidi = new StringBuilder();
+
+        for (int i = 0; i < RUOLI_VALIDI.length; i++) {
+            ruoliValidi.append(RUOLI_VALIDI[i]);
+            if (i < RUOLI_VALIDI.length - 1) {
+                ruoliValidi.append(", ");
+            }
+        }
+
+        return ruoliValidi.toString();
+    }
 
     // Metodo per controllare che l'input stringa non sia vuoto
-    public static String controlloInputStringhe(Scanner scanner) { 
+    public static String controlloInputStringhe(Scanner scanner) {
         String valore;
         do {
             valore = scanner.nextLine().trim();
@@ -145,7 +158,6 @@ class Controlli{
         boolean ruoloValido = false;
 
         do {
-            System.out.print("Ruolo del giocatore (Portiere, Difensore, Centrocampista, Attaccante): ");
             ruolo = scanner.nextLine().trim();
 
             // Controlla se il ruolo è tra quelli validi
@@ -157,13 +169,12 @@ class Controlli{
             }
 
             if (!ruoloValido) {
-                System.out.println("Ruolo non valido! Scegli tra Portiere, Difensore, Centrocampista, Attaccante.");
+                System.out.print("Ruolo non valido! Scegli tra " + getRuoliValidiStringa() + ": ");
             }
 
-        } while (!ruoloValido);  
+        } while (!ruoloValido);
 
         return ruolo;
     }
 }
-//#endregion
-
+// #endregion
