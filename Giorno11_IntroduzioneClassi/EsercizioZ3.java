@@ -8,13 +8,13 @@ public class EsercizioZ3 {
 
         // Creiamo due squadre con input manuale
         System.out.print("Inserisci il nome della prima squadra: ");
-        String nomeSquadra1 = controlloInputStringhe(scanner); 
+        String nomeSquadra1 = Controlli.controlloInputStringhe(scanner); 
         Squadra squadra1 = new Squadra(nomeSquadra1);
 
         squadra1.inserisciGiocatori(scanner);
 
         System.out.print("\nInserisci il nome della seconda squadra: ");
-        String nomeSquadra2 = controlloInputStringhe(scanner); 
+        String nomeSquadra2 = Controlli.controlloInputStringhe(scanner); 
         Squadra squadra2 = new Squadra(nomeSquadra2);
 
         squadra2.inserisciGiocatori(scanner);
@@ -31,46 +31,7 @@ public class EsercizioZ3 {
         scanner.close();
     }
 
-    // #region METODI DI CONTROLLO INPUT
-    // Metodo per controllare che l'input stringa non sia vuoto
-    public static String controlloInputStringhe(Scanner scanner) { 
-        String valore;
-        do {
-            valore = scanner.nextLine().trim();
-            if (valore.isEmpty()) {
-                System.out.print("Input non valido. Inserisci un testo: ");
-            }
-        } while (valore.isEmpty());
-        return valore;
-    }
-
-    // Metodo per controllare che il ruolo inserito sia valido
-    public static String controlloRuolo(Scanner scanner) {
-        final String[] RUOLI_VALIDI = {"Portiere", "Difensore", "Centrocampista", "Attaccante"};
-        String ruolo;
-        boolean ruoloValido = false;
-
-        do {
-            System.out.print("Ruolo del giocatore (Portiere, Difensore, Centrocampista, Attaccante): ");
-            ruolo = scanner.nextLine().trim();
-
-            // Controlla se il ruolo è tra quelli validi
-            for (String validRole : RUOLI_VALIDI) {
-                if (ruolo.equalsIgnoreCase(validRole)) {
-                    ruoloValido = true;
-                    break;
-                }
-            }
-
-            if (!ruoloValido) {
-                System.out.println("Ruolo non valido! Scegli tra Portiere, Difensore, Centrocampista, Attaccante.");
-            }
-
-        } while (!ruoloValido);  
-
-        return ruolo;
-    }
-    // #endregion
+   
 }
 
 //#region Classi
@@ -104,15 +65,14 @@ class Squadra {
 
     // Metodo per inserire manualmente i calciatori
     public void inserisciGiocatori(Scanner scanner) {
-        final int NUMERO_GIOCATORI = 12;
 
-        System.out.println("\nInserisci i" + NUMERO_GIOCATORI + "giocatori per la squadra " + nomeSquadra);
-        for (int i = 1; i <= NUMERO_GIOCATORI; i++) {
+        System.out.println("\nInserisci i" + Controlli.NUMERO_GIOCATORI + "giocatori per la squadra " + nomeSquadra);
+        for (int i = 1; i <= Controlli.NUMERO_GIOCATORI; i++) {
             System.out.print("Nome del giocatore " + i + ": ");
-            String nome = EsercizioZ3.controlloInputStringhe(scanner);
+            String nome = Controlli.controlloInputStringhe(scanner);
 
             System.out.print("Ruolo del giocatore " + i + " (Portiere, Difensore, Centrocampista, Attaccante): ");
-            String ruolo = EsercizioZ3.controlloRuolo(scanner);
+            String ruolo = Controlli.controlloRuolo(scanner);
 
             calciatori.add(new Calciatore(nome, ruolo));
         }
@@ -161,3 +121,49 @@ class Partita {
 
 }
 //#endregion
+
+// #region METODI DI CONTROLLO INPUT
+class Controlli{
+    public static final int NUMERO_GIOCATORI = 12;
+    public static final String[] RUOLI_VALIDI = {"Portiere", "Difensore", "Centrocampista", "Attaccante"};
+
+    // Metodo per controllare che l'input stringa non sia vuoto
+    public static String controlloInputStringhe(Scanner scanner) { 
+        String valore;
+        do {
+            valore = scanner.nextLine().trim();
+            if (valore.isEmpty()) {
+                System.out.print("Input non valido. Inserisci un testo: ");
+            }
+        } while (valore.isEmpty());
+        return valore;
+    }
+
+    // Metodo per controllare che il ruolo inserito sia valido
+    public static String controlloRuolo(Scanner scanner) {
+        String ruolo;
+        boolean ruoloValido = false;
+
+        do {
+            System.out.print("Ruolo del giocatore (Portiere, Difensore, Centrocampista, Attaccante): ");
+            ruolo = scanner.nextLine().trim();
+
+            // Controlla se il ruolo è tra quelli validi
+            for (String validRole : RUOLI_VALIDI) {
+                if (ruolo.equalsIgnoreCase(validRole)) {
+                    ruoloValido = true;
+                    break;
+                }
+            }
+
+            if (!ruoloValido) {
+                System.out.println("Ruolo non valido! Scegli tra Portiere, Difensore, Centrocampista, Attaccante.");
+            }
+
+        } while (!ruoloValido);  
+
+        return ruolo;
+    }
+}
+//#endregion
+
